@@ -1,0 +1,36 @@
+Truck Camper:
+    metadata:
+        username: Test
+        email: email@gmail.com
+        startdate: 06/13/19
+        status: active
+    site: seattle
+    category: cto
+    filters:
+        filter_booleans:
+            - search_nearby
+        filter_values:
+            postal: 98117
+            search_distance: 80
+            min_price: 0
+            max_price: 30000
+            min_auto_year: 1990
+        filter_boxes:
+            auto_bodytype:
+                - bus
+                - van
+                - truck
+                - other
+            condition:
+                - like new
+                - excellent
+                - good
+                - fair
+    keywords:
+        and:
+            - ford
+            - econoline
+            - 98
+        or: 
+            - camper
+            - van
