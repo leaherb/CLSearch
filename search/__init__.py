@@ -34,14 +34,16 @@ class SearchBase(object):
             self.email = None
         self.site = config['site']
         self.category = config['category']
-        if 'filters' in config:
-            self.filters = config['filters']
-        else:
-            self.filters = None
+        # keyword query, if any
         if 'keywords' in config:
             self.keywords = config['keywords']
         else:
             self.keywords = None
+        # filters, if any
+        if 'filters' in config:
+            self.filters = config['filters']
+        else:
+            self.filters = None
         self.url_base = 'https://' + self.site + \
                         '.craigslist.org/search/' + self.category 
         self.url = self.url_base + '?'
@@ -51,24 +53,19 @@ class SearchBase(object):
         
     def get_results(self, database, filters_dict):
         """Create dataframe of search results."""
+        # add keyword search to url
+        if self.keywords:
+            self.url = self.url + self.make_keyword_str()
         # add filters to url
         if self.filters:  
             self.url = self.url + self.make_filter_str(filters_dict)
-        # add keyword search to url
-        if self.keywords:
-            #self.url = self.url + self.make_keyword_str()
-            a = self.make_keyword_str()
-            print(a)
         # update self.results with posts scraped from this search
         print(self.url)
-        sys.exit(0)
         self.scrape_pages()
-        # tie results to this search name
-        self.results['search_name'] = self.search_name
-        # set 'notify' = True where post appears new (compared to database)
-        self.mark_new_posts(database)
         # clean post data
         self.clean_results()
+        # set 'notify' = True where post appears new (compared to database)
+        self.mark_new_posts(database)
         
         return None
 
@@ -208,7 +205,7 @@ class SearchBase(object):
                     self.results = self.results.append(parse(post), \
                                                        ignore_index = True)               
 
-        print('scrape_pages end: len(self.results', len(self.results), '\n')
+        print('Result count = ', len(self.results))
 
         return None
 
@@ -233,7 +230,9 @@ class SearchBase(object):
     def clean_results(self):
         """Clean results dataframe."""
         # drop duplicate post URLs, avoiding spammy listings.
-        self.results = self.results.drop_duplicates(subset='webpage'):w
+        self.results = self.results.drop_duplicates(subset='webpage')
+        # tie results to search name 
+        self.results['search_name'] = self.search_name
         # convert datetime strings into datetime objects
         self.results['post_date'] = self.results['post_date'].astype('datetime64[s]')
         self.results['crawl_date'] = self.results['crawl_date'].astype('datetime64[s]')
@@ -241,34 +240,30 @@ class SearchBase(object):
         return None
 
 
-    def send_email(self):
-        """Send email alert with result posts marked 'notify'"""
-        sender_email='youremail@gmail.com'  # CHANGETHIS
-        smtp_server = 'smtp.gmail.com'
-        smtp_port= 587
-        smtp_user='youremail@gmail.com'  # CHANGETHIS
-        smtp_password="yourpassword"  # CHANGETHIS
+    def send_email(self, email_dict, new_df):
+        """Send email alert with contents of given dataframe."""
+        sender_email = email_dict['sender_email']
+        smtp_server = email_dict['smtp_server']
+        smtp_port = email_dict['smtp_port']
+        smtp_user = email_dict['smtp_user']
+        smtp_password = email_dict['smtp_password']
         # Create message container - the correct MIME type is multipart/alternative.
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = 'Craigslist Results for ' + self.search_name
-        msg['From'] = sender_email
+        msg['Subject'] = 'for ' + self.search_name
+        msg['From'] = 'Craigslist Search Alert <' + sender_email + '>'
         msg['To'] = self.email
 
-        print('send_email: len(self.results) = ', len(self.results))
-        notify_df = self.results.query('notify == True')
-        print('send_email: len_results = ', len(notify_df))
-
-        # Create the body of the message (a plain-text and an HTML version).
-        msg_text = "Here are latest listings for your {name} search:\n{listings}". \
+       # Create the body of the message (a plain-text and an HTML version).
+        msg_text = "Recent listings for your {name} search:\n{listings}". \
                    format(name=self.search_name, \
-                          listings=notify_df[['webpage']]. \
+                          listings=new_df[['webpage']]. \
                           to_string(index=False, header=False))
         columns = ['cost','descr','area','post_date','webpage','pic']
         pd.set_option('display.max_colwidth', -1)
         msg_html = '<html> <head></head> <body> \
-                    <h2>Latest search listings for: {name}</h2> {listings} \
+                    <h2>Recent listings for: {name}</h2> {listings} \
                     </body> </html> '.\
-                    format(listings=notify_df[columns].to_html(), name=self.search_name) 
+                    format(listings=new_df[columns].to_html(), name=self.search_name) 
 
         # Record the MIME types of both parts - text/plain and text/html.
         part1 = MIMEText(msg_text, 'plain')
