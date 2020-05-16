@@ -103,9 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# My docs
-/craigslist-search-alert-Docs
-
 # Misc ignore
 /donotinclude
 .DS_Store

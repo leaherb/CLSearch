@@ -1,17 +1,17 @@
-Truck Camper:
+Bondy Camper:
     metadata:
-        username: Test
-        email: email@gmail.com
+        username: Greg Bondy
+        email: gipsy@olypen.com
         startdate: 06/13/19
         status: active
-    site: seattle
+    site: olympic
     category: cto
     filters:
         filter_booleans:
             - search_nearby
         filter_values:
-            postal: 98117
-            search_distance: 80
+            postal: 98363
+            search_distance: 85
             min_price: 0
             max_price: 30000
             min_auto_year: 1990
@@ -29,8 +29,71 @@ Truck Camper:
     keywords:
         and:
             - ford
-            - econoline
-            - 98
         or: 
             - camper
             - van
+
+# --------------------
+Leah Car:
+    metadata:
+        username: Leah Erb
+        startdate: 06/13/19
+        status: inactive
+    site: olympic
+    category: cta
+    keywords:
+        or:
+            - subaru
+            - corvette
+            - chevy
+            - ford
+
+# --------------------
+Auto Template:
+    metadata:
+        username: First Last
+        email: myemail@gmail.com
+        startdate: mm/dd/yy
+        status: template
+    site: olympic
+    category: cto 
+    keywords:
+        and:
+            - word1
+            - word2
+        or: 
+            - word3
+            - word4
+    filters:
+       filter_booleans:
+           - search_title_only
+           - has_pic
+           - posted_today
+           - bundle_dups
+           - search_nearby
+       filter_values:
+           # common filters
+           postal: # zipcode 
+           search_distance: # max = 200
+           # for sale filters
+           min_price:
+           max_price: 
+       filter_boxes:
+           # car/truck filters
+           auto_bodytype:
+               - bus
+               - convertible
+               - coupe
+               - hatchback
+               - mini-van
+               - offroad
+               - pickup
+               - sedan
+               - truck
+               - SUV
+               - wagon
+               - van
+               - other
+           fuel_type:
+               -
+               -

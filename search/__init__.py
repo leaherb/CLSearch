@@ -1,3 +1,5 @@
+## Define objects and functions used by craigslist-search-alert
+
 ## Libraries
 import os
 import sys
