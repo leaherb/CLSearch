@@ -311,19 +311,30 @@ def dump_yaml(filename, this_dict):
 
 
 
-def load_data(filename):
+def load_data_pickle(filename):
     """Return dataframe loaded with pickled file."""
     with open(filename, 'rb') as f:
         return pickle.load(f)
 
 
 
-def dump_data(filename, this_df):
+def dump_data_pickle(filename, this_df):
     """Write pickled file with dataframe contents. Return None."""
     with open(filename, 'wb') as f:
         pickle.dump(this_df, f)
     return None
 
+
+
+def load_data_json(filename):
+    """Return dataframe loaded with JSON file."""
+    return pd.read_json(filename)
+
+
+def dump_data_json(filename, this_df):
+    """Write JSON file with dataframe contents. Return None."""
+    this_df.to_json(filename)
+    return None
 
 
 def parse(post):

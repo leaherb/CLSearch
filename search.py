@@ -1,7 +1,9 @@
 import sys
 import os
-import search as cls
 import pandas as pd
+import search as cls
+import notify
+
 
 def main():
     ## TODO:
@@ -12,17 +14,13 @@ def main():
     #  * Track changes in search parameters (index on other than name?)
 
     ## Load global parameters
-    email_config_file = './email_config.yml'
     searches_config_file = './searches_config.yml'
-    database = 'database.pickle'
+    database_type = 'JSON'  # ['pickle', 'JSON']
+    database = 'database.' + database_type
 
-    ## Load email configuration settings 
-    try:
-        email_configs = cls.load_yaml(email_config_file)
-    except Exception as e:
-        print('{error}\nUnable to load YAML file \'{filename}\'. \nContinuing without email alert option ...'.\
-            format(error=e, filename=email_config_file))
-        
+    print(database)
+
+    
     ## Load search parameter settings 
     try:
         saved_searches = cls.load_yaml(searches_config_file)
@@ -32,15 +30,21 @@ def main():
         sys.exit(1)
 
 
-    ## Load prior results database 
+    ## Initialize new search results
+    all_df = pd.DataFrame()   
+
+    ## Load prior results  
     if os.path.isfile(database):
-        database_df = cls.load_data(database)
+        database_df = cls.load_data_pickle(database)
     else:
         database_df = pd.DataFrame()
 
-    all_df = pd.DataFrame()   # compilation of search results this run
+    pd.set_option('display.max_columns', None)
+    print(f'Rows pre-existing: {len(database_df.index)}\n')
+    print(database_df.tail())
 
-    ## Loop through saved searches, processing each
+
+    ## Process search requests
     for search in saved_searches:
         print('='*50)
         #print(saved_searches[search])
@@ -55,7 +59,7 @@ def main():
         #     * move this function to admin function then load once as yaml or json
         filters_dict = cls.build_indexed_filters(this_search.url_base)
         
-        # process alert only if status is active
+        # process active searches only. todo: filter search list prior to for loop
         if this_search.status == 'active':
             # get post result details 
             this_search.get_results(database=database_df, filters_dict=filters_dict)
@@ -63,16 +67,9 @@ def main():
             # add this search's results to all searches in this run
             all_df = all_df.append(this_search.results, ignore_index = True)
 
-            # if there's an email addreess, send alert of any new posts
-            new_df = this_search.results.query('notify == True')
-            print('{} new posts found'.format(len(new_df)))
-            
-            if len(new_df) > 0 and this_search.email:
-                print('emailing to ', this_search.email)
-                this_search.send_email(email_configs, new_df)
 
     # write all results, previous and this run, to storage as the new database
-    cls.dump_data(database, database_df.append(all_df, ignore_index=True))
+    cls.dump_data_pickle(database, database_df.append(all_df, ignore_index=True))
 
 
 

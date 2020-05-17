@@ -3,7 +3,7 @@ Bondy Camper:
         username: Greg Bondy
         email: gipsy@olypen.com
         startdate: 06/13/19
-        status: active
+        status: inactive
     site: olympic
     category: cto
     filters:
@@ -38,15 +38,26 @@ Leah Car:
     metadata:
         username: Leah Erb
         startdate: 06/13/19
-        status: inactive
+        status: active
     site: olympic
     category: cta
+    filters:
+        filter_booleans:
+            - search_nearby
+        filter_values:
+            postal: 98363
+            search_distance: 50
+            min_price: 0
+            max_price: 20000
+            min_auto_year: 1999
+        filter_boxes:
+            condition:
+                - like new
+                - excellent
     keywords:
         or:
             - subaru
-            - corvette
-            - chevy
-            - ford
+            - honda
 
 # --------------------
 Auto Template:
