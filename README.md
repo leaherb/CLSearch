@@ -1,11 +1,9 @@
 # CL-Search
 
-**CL-Search** is a microservce. I am building a system if microservices to, eventually, build an app to automate Craigslist searches that will notify the requestor of new search results.
+**CL-Search** is a microservce, one of several that will (eventually) form an app that automates Craigslist searches and notifies the requestor of new search results.
 
 ## Purpose
 Automate [Craigslist](https://www.craigslist.org/about/sites){target="_blank"} searches. Store search results in a database.
-
-Any number of named searches (defined in **search_config.yml**) are initiated with each run of **search.py**. Search configurations can be archived (not included in a run), or activated (included in a run).
 
 ## Disclaimer
 
@@ -21,19 +19,18 @@ This project was created for educational purposes. I do not endorse its use for 
 python search.py
 ```
 
-3. Search results are saved to a database, currently a file called **database.JSON**. If there is no existing database file, one will be created.
+> Search results are saved to a database, currently hardcoded to a file named **database.JSON**. If there is no existing database file, one will be created.
 
 
 ## Project Status
-This project a work in progress.
+
+This project is a work in progress.
 
   * An interface for building named searches would be a welcome addition.
-  * No analysis functions provided for analyzing the database. 
-  * An alert notifications module is not completed.
 
 ## How to Contribute
 
-I strongly encourage you to submit pull requests to make improvements to this project.
+I encourage you to submit pull requests to help make improvements to this project. Consider opening an Issue so we can discuss your ideas.
 
 Please use the [Udacity Git Commit Message Style Guide](https://udacity.github.io/git-styleguide/), and follow the "fork-and-pull" Git workflow:
 
@@ -47,25 +44,17 @@ Note: Please take care to merge the latest from "upstream" before making a pull 
 
 ## To Do
 
-[ ] Update this README with better instructions
-
 [ ] Add:
   * requirements.txt
   * setup.py
   * /tests/test_basic.py
   * /tests/test_advanced.py
   
-[ ] Improve email body
-  
-[ ] Add SMS option, as well as multiple alert distinations (SMS and/or email)
+[ ] Add database options (e.g. NoSQL, PostgreSQL, etc)
 
-[ ] Add database format options (e.g. MySQL)
-
-[ ] Add admin functions: create filter dictionaries, instead of creating during every search.py run
+[ ] Add admin functions: create filter dictionaries, instead of (re)creating with every run
 
 [ ] Add option to Limit post results (to each search, or global, or at a time)
-
-[ ] Add scheduling by search (1/day, 1/week, etc)
 
 [ ] Add filters for categories other than the default car/truck
 
