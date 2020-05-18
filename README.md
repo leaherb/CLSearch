@@ -1,9 +1,13 @@
 # CL-Search
 
-**CL-Search** is a microservce, one of several that will (eventually) form an app that automates Craigslist searches and notifies the requestor of new search results.
+**CL-Search** is a microservice, one of several that will (eventually) form an app that automates Craigslist searches and notifies the requestor of new search results. **CL-Search** is also a stand-alone script, easily invoked manually or run on a schedule.
 
 ## Purpose
-Automate [Craigslist](https://www.craigslist.org/about/sites){target="_blank"} searches. Store search results in a database.
+Automate [Craigslist](https://www.craigslist.org/about/sites {target="_blank"}) searches. Store search results in a database.
+
+## Project Status
+
+This project is a work in progress.
 
 ## Disclaimer
 
@@ -12,21 +16,15 @@ I have no affiliation with Craigslist.
 This project was created for educational purposes. I do not endorse its use for crawling or downloading data from Craigslist.
 
 ## Usage
-1. Add search parameters to the configuration file **searches_config.yml**, in [YAML](https://yaml.org/) format. Any number of searches can be added to **searches_config.yml**. Only those with `status: active` will be processed. 
+1. Add search parameters to the configuration file **searches_config.yml** ([YAML](https://yaml.org/)) Any number of named searches can be added to **searches_config.yml**. Only those with `status: active` will be processed. See **searches_config.yml** for template(s).
 
 2. Run search.py:
 ```
 python search.py
 ```
 
-> Search results are saved to a database, currently hardcoded to a file named **database.JSON**. If there is no existing database file, one will be created.
+> Search results are saved to a database, to a file named **database.JSON**. If there is no existing database file, one will be created.
 
-
-## Project Status
-
-This project is a work in progress.
-
-  * An interface for building named searches would be a welcome addition.
 
 ## How to Contribute
 
