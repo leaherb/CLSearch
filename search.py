@@ -9,11 +9,10 @@ import logger
 def main():
 
     ## TODO:
-    #  * Add max results (to each search, or global, or at a time)
-    #  * Add scheduling by search
+    #  * Add max results returned (to each search, or global, or at a time)
     #  * Better handling of filters, and filters for categories other than car/truck
-    #  * Lots more error handling and search parameter validation
-    #  * Track changes in search parameters (index on other than name?)
+    #  * Add lots more error handling and search parameter validation
+    #  * Store search parameters with results. Change search name if parameters change.
 
     ## Load global parameters
     searches_config_file = './searches_config.yml'
