@@ -1,7 +1,9 @@
-# craigslist-search-alert
+# CL-Search
+
+**CL-Search** is a microservce. I am building a system if microservices to, eventually, build an app to automate Craigslist searches that will notify the requestor of new search results.
 
 ## Purpose
-Automate [Craigslist](https://www.craigslist.org/about/sites){target="_blank"} searches. Store search results in a database. Use accumulated search results to discover trends and explore correlations.
+Automate [Craigslist](https://www.craigslist.org/about/sites){target="_blank"} searches. Store search results in a database.
 
 Any number of named searches (defined in **search_config.yml**) are initiated with each run of **search.py**. Search configurations can be archived (not included in a run), or activated (included in a run).
 
