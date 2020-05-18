@@ -3,6 +3,9 @@
 ## Libraries
 import os
 import sys
+import logging
+from warnings import warn
+
 import yaml
 from requests import get
 from datetime import datetime
@@ -12,7 +15,6 @@ import numpy as np
 import pickle
 from time import sleep
 from random import randint # avoid too many requests too fast
-from warnings import warn
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -63,6 +65,7 @@ class SearchBase(object):
             self.url = self.url + self.make_filter_str(filters_dict)
         # update self.results with posts scraped from this search
         print(self.url)
+        logging.debug('This search URL --> ' + self.url)
         self.scrape_pages()
         # clean post data
         self.clean_results()
@@ -164,6 +167,7 @@ class SearchBase(object):
             '+'.join([or_words, and_words]).lstrip('+').rstrip('+')
 
         print('result_query = ', result_query)
+        #logging.debug('result_query = ', result_query)
             
         return result_query
 
@@ -208,6 +212,7 @@ class SearchBase(object):
                                                        ignore_index = True)               
 
         print('Result count = ', len(self.results))
+        #logging.debug('Result count = ', len(self.results))
 
         return None
 
@@ -437,7 +442,6 @@ def make_filter_str(this_search, filters_dict):
         None
 
     return result_filters
-
 
 ##
 ## EOF

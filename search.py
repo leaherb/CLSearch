@@ -1,11 +1,13 @@
 import sys
 import os
+import logging
 import pandas as pd
 import search as cls
-import notify
+import logger
 
 
 def main():
+
     ## TODO:
     #  * Add max results (to each search, or global, or at a time)
     #  * Add scheduling by search
@@ -19,6 +21,7 @@ def main():
     database = 'database.' + database_type
 
     print(database)
+    logging.debug(database)
 
     
     ## Load search parameter settings 

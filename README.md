@@ -1,5 +1,9 @@
 # craigslist-search-alert
-Search [Craigslist](https://www.craigslist.org/about/sites) using saved search parameters. Any number of searches can be run at the same time. Results are stored to a database for later analysis. Search results that are 'new' are sent as an alert to a given email address.
+
+## Purpose
+Automate [Craigslist](https://www.craigslist.org/about/sites){target="_blank"} searches. Store search results in a database. Use accumulated search results to discover trends and explore correlations.
+
+Any number of named searches (defined in **search_config.yml**) are initiated with each run of **search.py**. Search configurations can be archived (not included in a run), or activated (included in a run).
 
 ## Disclaimer
 
@@ -8,22 +12,22 @@ I have no affiliation with Craigslist.
 This project was created for educational purposes. I do not endorse its use for crawling or downloading data from Craigslist.
 
 ## Usage
-1. Add search parameters to the configuration file **searches_config.yml**, in [YAML](https://yaml.org/) format. Any number of searches can be added to **searches_config.yml**. Only those with `status: active` will be processed. Only those with `email: youremail@mail.com` will have new records send via email.
+1. Add search parameters to the configuration file **searches_config.yml**, in [YAML](https://yaml.org/) format. Any number of searches can be added to **searches_config.yml**. Only those with `status: active` will be processed. 
 
 2. Run search.py:
 ```
 python search.py
 ```
 
-3. Search results are saved to a database, currently a file called **database.pickle** * in [Pickle](https://docs.python.org/3/library/pickle.html) format. If there is no database file, one will be created.
-
-  * Currently, there are no analysis functions provided for analyzing the database. 
+3. Search results are saved to a database, currently a file called **database.JSON**. If there is no existing database file, one will be created.
 
 
 ## Project Status
 This project a work in progress.
 
-Although the Python script **search.py** works, it is currently lacking: finesse, adequate template(s) for **searches_config.yml**, error handling and validations. 
+  * An interface for building named searches would be a welcome addition.
+  * No analysis functions provided for analyzing the database. 
+  * An alert notifications module is not completed.
 
 ## How to Contribute
 
