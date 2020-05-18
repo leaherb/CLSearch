@@ -1,5 +1,0 @@
-sender_email: email@gmail.com
-smtp_server: smtp.gmail.com
-smtp_port: 587
-smtp_user: email@gmail.com
-smtp_password: recommend_using_app_password
