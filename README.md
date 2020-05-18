@@ -1,6 +1,6 @@
-# CL-Search
+# CLSearch
 
-**CL-Search** is a microservice, one of several that will (eventually) form an app that automates Craigslist searches and notifies the requestor of new search results. **CL-Search** is also a stand-alone script, easily invoked manually or run on a schedule.
+**CLSearch** is a microservice, one of several that will (eventually) form an app that automates Craigslist searches and notifies the requestor of new search results. **CLSearch** is also a stand-alone script, easily invoked manually or run on a schedule.
 
 ## Purpose
 Automate <a href="https://www.craigslist.org/about/sites" target="_blank">Craigslist</a> searches. Store search results in a database.
